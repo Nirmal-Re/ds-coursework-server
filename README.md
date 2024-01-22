@@ -37,15 +37,15 @@ The service implements an API of the following functions:
 
 ## Some instructions for testing
 
-a = :global.whereis_name(:RS1);
-b = :global.whereis_name(:RS2);
-c = :global.whereis_name(:RS3);
-ReservationServer.book(a, 1);
-ReservationServer.book(a, 2);
-ReservationServer.get_all_seats(b)
-ReservationServer.unbook(c, 1);
-ReservationServer.get_all_seats(b)
-ReservationServer.unbook(a, 5);
+`a = :global.whereis_name(:RS1)`
+`b = :global.whereis_name(:RS2)`
+`c = :global.whereis_name(:RS3)`
+`ReservationServer.book(a, 1)`
+`ReservationServer.book(a, 2)`
+`ReservationServer.get_all_seats(b)`
+`ReservationServer.unbook(c, 1)`
+`ReservationServer.get_all_seats(b)`
+`ReservationServer.unbook(a, 5)`
 
 ## Assumptions
 
