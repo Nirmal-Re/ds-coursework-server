@@ -24,7 +24,7 @@ The service implements an API of the following functions:
 > This function un-reserves the seat seat_no. The value ‘r’ is the PID of the reservation server.
 
 1.  This function returns `:ok` if the seat is successfully unbooked, or
-2.  `:cancel` if the seat with `seat_no` was already wasn't booked, or
+2.  `:cancel` if the seat with `seat_no` wasn't already booked, or
 3.  `:timeout` upon timeout.
 
 ## Usage Instructions
@@ -41,7 +41,8 @@ The service implements an API of the following functions:
 `b = :global.whereis_name(:RS2)`  
 `c = :global.whereis_name(:RS3)`  
 `ReservationServer.book(a, 1)`  
-`ReservationServer.book(a, 2)`  
+`ReservationServer.book(a, 2)`
+`ReservationServer.book(b, 2)`  
 `ReservationServer.get_all_seats(b)`  
 `ReservationServer.unbook(c, 1)`  
 `ReservationServer.get_all_seats(b)`  
