@@ -9,7 +9,7 @@ The service implements an API of the following functions:
 
 ### 1. `get_all_seats(r)`
 
-> This function takes the reservation server PID ‘r’ and returns seats a map of reserved and unreserved seats. Upon success, this function returns all seat numbers split into two groups, reserved and unreserved. Upon timeout, `:timeout` is returned.
+> This function takes the reservation server PID ‘r’ and computes the status of all seats on the airline. Upon success, this function returns all seat numbers split into two groups, reserved and unreserved. Upon timeout, `:timeout` is returned.
 
 ### 2. `book(r, seat_no)`
 
@@ -58,7 +58,9 @@ The system does not incorporate user accounts. Assume that, from a business pers
 - A seat can be booked only once.
 - Only booked seats can be unbooked.
 - At all times, the number of available (unreserved, unbooked) seats is equal to the total number of seats minus the number of unavailable (reserved, booked).
+-
 
 #### Liveness Properties
 
-- An instance eventually decides upto a minority of failures
+- An instance eventually decides up to at most minority of failures
+-
