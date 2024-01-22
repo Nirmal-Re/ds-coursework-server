@@ -184,7 +184,7 @@ defmodule ReservationServer do
         {:book, client, seat_no} ->
           state = case state.pending do
               {^i, ^client} ->
-                state = if !MapSet.member?(state.reserved_seats, seat_no) do
+                state = if !MapSet.member?(state.reserved_seats, seat_no) and MapSet.member?(state.unreserved_seats, seat_no) do
                   state = %{state | reserved_seats: MapSet.put(state.reserved_seats, seat_no), unreserved_seats: MapSet.delete(state.unreserved_seats, seat_no)}
                   send(elem(state.pending, 1), {:book_ok})
                   %{state | pending: {0, nil}}
@@ -195,7 +195,7 @@ defmodule ReservationServer do
 
               {^i,
               } ->
-                state = if !MapSet.member?(state.reserved_seats, seat_no) do
+                state = if !MapSet.member?(state.reserved_seats, seat_no) and MapSet.member?(state.unreserved_seats, seat_no) do
                   state = %{state | reserved_seats: MapSet.put(state.reserved_seats, seat_no), unreserved_seats: MapSet.delete(state.unreserved_seats, seat_no)}
                   send(elem(state.pending, 1), {:book_failed})
                   %{state | pending: {0, nil}}
@@ -204,7 +204,7 @@ defmodule ReservationServer do
                   %{state | pending: {0, nil}}
                 end
               _ ->
-                state = if !MapSet.member?(state.reserved_seats, seat_no) do
+                state = if !MapSet.member?(state.reserved_seats, seat_no) and MapSet.member?(state.unreserved_seats, seat_no) do
                   %{state | reserved_seats: MapSet.put(state.reserved_seats, seat_no), unreserved_seats: MapSet.delete(state.unreserved_seats, seat_no)}
                 else
                   state
