@@ -1,7 +1,8 @@
 # Airline Seat Reservation
 
 COM3026 Distributed Systems 2023/24  
-Nirmal Bhandari, Paul Latham
+Name: Nirmal Bhandari, URN: 6584896, id: nb00740
+Name: Paul Latham, URN: 6685757, id: pl00600
 
 ## Service API
 
