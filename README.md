@@ -1,8 +1,8 @@
 # Airline Seat Reservation
 
 COM3026 Distributed Systems 2023/24  
-Name: Nirmal Bhandari, URN: 6584896, id: nb00740
-Name: Paul Latham, URN: 6685757, id: pl00600
+Name: Nirmal Bhandari, URN: 6584896, ID: nb00740
+Name: Paul Latham, URN: 6685757, ID: pl00600
 
 ## Service API
 
@@ -30,24 +30,51 @@ The service implements an API of the following functions:
 
 ## Usage Instructions
 
+#### Setup
+
 > 1. Compile the code using the command `elixirc *.ex`
 > 2. Start the Erlang shell using the command `iex`
 > 3. Create a list of process names of your choosing, e.g. `processes = [:RS1, :RS2, :RS3]`
 > 4. Start the reservation servers using the command `pids = Enum.map(processes, fn(p) -> ReservationServer.start(p, processes) end)`. This will spawn the reservation servers and return their PIDs. It will also spawn paxos, eventual leader detector, and best effort broadcast for each reservation server and link them. By default, the seats start at 1 and end at 10. You can change this by passing the number of seats as the third argument to the `start` function.
 > 5. If you would like to give custom seats, you can use the command `pids = Enum.map(processes, fn(p) -> ReservationServer.start(p, processes, hasTobeList) end)`. Where `hasTobeList` is a list of seats that can be reserved.
 
-## Some instructions for testing
+#### Usage and testing
+
+##### 1. Rename servers for ease of use
 
 `a = :global.whereis_name(:RS1)`  
 `b = :global.whereis_name(:RS2)`  
 `c = :global.whereis_name(:RS3)`  
-`ReservationServer.book(a, 1)`  
-`ReservationServer.book(a, 2)`
-`ReservationServer.book(b, 2)`  
+
+`ReservationServer.get_all_seats(a)`  
 `ReservationServer.get_all_seats(b)`  
+`ReservationServer.get_all_seats(c)`  
+
+##### 2. Test booking functionality
+
+`ReservationServer.book(a, 1)`  
+`ReservationServer.book(a, 2)`  
+`ReservationServer.book(b, 2)`
+> Attempting a double booking (:cancel)  
+
+
+`ReservationServer.get_all_seats(a)`  
+`ReservationServer.get_all_seats(b)`  
+`ReservationServer.get_all_seats(c)`  
+> Observe all servers are synchronised  
+
+##### 3. Test unbooking functionality
+
 `ReservationServer.unbook(c, 1)`  
 `ReservationServer.get_all_seats(b)`  
-`ReservationServer.unbook(a, 5)`
+`ReservationServer.unbook(a, 5)` 
+> Attempting a double unbooking (:cancel)  
+
+
+`ReservationServer.get_all_seats(a)`  
+`ReservationServer.get_all_seats(b)`  
+`ReservationServer.get_all_seats(c)`  
+> Observe all servers are synchronised
 
 ## Assumptions
 
